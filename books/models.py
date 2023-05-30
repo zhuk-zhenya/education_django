@@ -10,3 +10,7 @@ class Book(models.Model):
 
     def __str__(self):
         return f"Book title: {self.title} Author: {self.author}"
+
+
+class Genre(models.Model):
+    title = models.CharField(max_length=50)
