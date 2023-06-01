@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Posts with Tags</title>
+</head>
+<body>
+  <h1>All Posts with Tags</h1>
+
+    <h2>All Posts</h2>
+
+      <ul>
+          {% for post in posts %}
+          <li>{{ post.title }} - {{ post.category }}</li>
+          {% endfor %}
+      </ul>
+
+    <h2>All Tags</h2>
+
+      <ul>
+          {% for tag in tags %}
+          <li>{{ tag.title }}</li>
+          {% endfor %}
+      </ul>
+</body>
+</html>

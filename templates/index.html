@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+    <h1>List books</h1>
+    {% for book in books %}
+     <p>{{book.title}}</p>
+     <p>{{book.author}}</p>
+    {% endfor %}
+    <h1>Ganres</h1>
+    {% for genre in genres %}
+     <p>{{genre.title}}</p>
+
+    {% endfor %}
+     <h1>Publisher</h1>
+    {% for publisher in publishers %}
+     <p>{{publisher.title}}</p>
+
+    {% endfor %}
+</body>
+</html>
