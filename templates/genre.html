@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ genre.title }}</title>
+</head>
+<body>
+    <h1>Жанр {{ genre.title }}</h1>
+
+    {% for book in genre.books.all %}
+        <p>id книги {{ book.id }}</p>
+        <p>Название книги {{ book.title }}</p>
+        <p>Автор книги {{ book.author }}</p>
+    <br>
+    {% endfor %}
+
+</body>
+</html>

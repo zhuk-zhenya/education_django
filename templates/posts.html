@@ -11,7 +11,7 @@
 
       <ul>
           {% for post in posts %}
-          <li>{{ post.title }} - {{ post.category }}</li>
+          <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
           {% endfor %}
       </ul>
 
@@ -19,7 +19,7 @@
 
       <ul>
           {% for tag in tags %}
-          <li>{{ tag.title }}</li>
+          <li><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></li>
           {% endfor %}
       </ul>
 </body>

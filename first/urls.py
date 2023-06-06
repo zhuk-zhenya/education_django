@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("books/", include("books.urls")),
     path('get_posts/', include('app_posts.urls')),
+
 ]
