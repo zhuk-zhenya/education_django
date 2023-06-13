@@ -1,8 +1,8 @@
-from django.db import models
 
 # Create your models here.
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Tag(models.Model):
@@ -25,7 +25,7 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
     description = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title

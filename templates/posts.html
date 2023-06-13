@@ -5,6 +5,13 @@
     <title>All Posts with Tags</title>
 </head>
 <body>
+
+    <form action="{% url 'search_post' %}" method="get">
+        {% csrf_token %}
+        <input placeholder="Введите название поста" type="text" name="search">
+        <input type="submit" value="OK">
+    </form>
+
   <h1>All Posts with Tags</h1>
 
     <h2>All Posts</h2>
@@ -22,5 +29,7 @@
           <li><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></li>
           {% endfor %}
       </ul>
+
+    <a href="{% url 'create_post' %}"><input type="button" value="Добавить пост"></a>
 </body>
 </html>

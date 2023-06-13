@@ -5,6 +5,9 @@
     <title>{{ post.title }}</title>
 </head>
 <body>
+
+
+
   <h1>{{ post.title }}</h1>
 
   <p>Категория: {{ post.category }}</p>
@@ -23,6 +26,7 @@
       <p>Тегов нет</p>
   {% endif %}
 
+    <a href="{% url 'get_posts' %}"><input type="button" value="назад"></a>
 
 </body>
 </html>

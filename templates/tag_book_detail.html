@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>{{ tag }}</p>
+{% for book in tag_books %}
+<p>{{ book.title }}</p>
+{% endfor %}
+</body>
+</html>

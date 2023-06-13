@@ -28,18 +28,19 @@ class Book(models.Model):
     title = models.CharField(max_length=50)
     author = models.CharField(max_length=50)
     year = models.IntegerField()
-    raiting = models.IntegerField(default=0)
-    publisher = models.OneToOneField("Publisher", on_delete=models.DO_NOTHING, default=None)
+    raiting = models.IntegerField(default=0, null=True, blank=True)
+    publisher = models.OneToOneField("Publisher", on_delete=models.DO_NOTHING, default=None, null=True, blank=True)
     genre = models.ForeignKey("Genre", on_delete=models.DO_NOTHING, null=True, blank=True, related_name="books")
-    tags = models.ManyToManyField("Tag", related_name="books")
+    tags = models.ManyToManyField("Tag", related_name="books", blank=True)
 
     def __str__(self):
         return f"Book title: {self.title} Author: {self.author}"
 
-
     class Meta:
         verbose_name = "Книга"
         verbose_name_plural = "Книги"
+
+
 class Genre(models.Model):
     title = models.CharField(max_length=50)
 
