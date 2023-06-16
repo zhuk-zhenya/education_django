@@ -9,5 +9,6 @@
 {% for book in tag_books %}
 <p>{{ book.title }}</p>
 {% endfor %}
+<a href="{% url 'books' %}"><input type="button" value="назад"></a>
 </body>
 </html>

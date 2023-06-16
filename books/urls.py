@@ -9,5 +9,6 @@ urlpatterns = [
     path("add_book/", views.add_book, name="add_book"),
     # path('create_book/', views.create_book, name='create_book')
     path('search_book/', views.search_book, name="search_book"),
-
+    path('delete_book/<int:id>/', views.delete_book, name="delete_post"),
 ]
+

@@ -6,6 +6,9 @@
 </head>
 <body>
     <h1>Поиск книг</h1>
+
+    {% if books %}
+
     {% for book in books %}
         <p>
             Название: <a href="{% url 'get_book' book.id %}">
@@ -18,5 +21,12 @@
         <br>
 
     {% endfor %}
+
+    {% else %}
+    <h1>Книг нет</h1>
+
+    {% endif %}
+
+    <a href="{% url 'books' %}"><input type="button" value="назад"></a>
 </body>
 </html>

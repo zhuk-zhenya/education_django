@@ -9,7 +9,11 @@ from .forms import BookForm
 
 def books(request):
     books = models.Book.objects.all()
-    return render(request, "index.html", context={"books": books})
+    genres = models.Genre.objects.all()
+    publishers = models.Publisher.objects.all()
+    return render(request, "index.html", context={"books": books,
+                                                  "genres": genres,
+                                                  "publishers": publishers})
 
 
 def get_book(request, id):
@@ -51,33 +55,48 @@ def add_book(request):
         form = BookForm()
         return render(request, "add_book.html", context={"form": form})
     elif request.method == "POST":
-        publisher_id = request.POST['publisher']
-        genre_id = request.POST['genre']
-
-        if publisher_id != '' and genre_id != '':
-            publisher = models.Publisher.objects.get(id=publisher_id)
-            genre = models.Genre.objects.get(id=genre_id)
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
         else:
-            publisher = None
-            genre = None
+            return HttpResponse("<h1>Что то пошло не так))</h1>")
+    return redirect("books")
 
-        book = models.Book.objects.create(title=request.POST['title'],
-                                          author=request.POST['author'],
-                                          year=request.POST['year'],
-                                          raiting=request.POST['raiting'],
-                                          publisher=publisher,
-                                          genre=genre)
-        tags = request.POST.getlist('tags')
-        book.tags.set(tags)
-        book.save()
-
-        return redirect("books")
+        # if publisher_id != '' and genre_id != '':
+        #     publisher = models.Publisher.objects.get(id=publisher_id)
+        #     genre = models.Genre.objects.get(id=genre_id)
+        # else:
+        #     publisher = None
+        #     genre = None
+        #
+        # book = models.Book.objects.create(title=request.POST['title'],
+        #                                   author=request.POST['author'],
+        #                                   year=request.POST['year'],
+        #                                   raiting=request.POST['raiting'],
+        #                                   publisher=publisher,
+        #                                   genre=genre)
+        # tags = request.POST.getlist('tags')
+        # book.tags.set(tags)
+        # book.save()
+        #
+        # return redirect("books")
 
 
 def search_book(request):
-    query = request.GET.get('search')
-    print(query)
-    search_query = request.GET['search']
-    search_books = models.Book.objects.filter(title__contains=search_query)
+    title = request.GET['title']
+    genre = request.GET['genre']
+    books = models.Book.objects.all()
+    if title != '':
+        books = books.filter(title__contains=title)
+    if genre != '':
+        books = books.filter(genre__title__contains=genre)
+    return render(request, 'search_book.html', context={"books": books})
 
-    return render(request, 'search_book.html', context={"books": search_books})
+
+def delete_book(request, id):
+    try:
+        book = models.Book.objects.get(id=id)
+    except models.Book.DoesNotExist:
+        return HttpResponse(f"<h1>книги с таким айди {id} не существует</h1>")
+    book.delete()
+    return redirect('books')

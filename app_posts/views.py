@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import PostForm
 from . import models
@@ -9,9 +10,11 @@ from . import models
 def get_posts(request):
     posts = models.Post.objects.all()
     tags = models.Tag.objects.all()
+    category_posts = models.CategoryPost.objects.all()
     context = {
         'posts': posts,
-        'tags': tags
+        'tags': tags,
+        'category_posts': category_posts
     }
     return render(request, 'posts.html', context=context)
 
@@ -39,22 +42,31 @@ def add_post(request):
         form = PostForm()
         return render(request, "add_post.html", context={"form": form})
     elif request.method == "POST":
-
-        post = models.Post.objects.create(title=request.POST['title'],
-                                          category=request.POST['category'],
-                                          description=request.POST['description'],
-                                          created_date=request.POST['created_date'],
-                                          )
-        tags = request.POST.getlist('tags')
-        post.tags.set(tags)
-        post.save()
-
-        return redirect("get_posts")
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            return HttpResponse("<h1>Что то пошло не так))</h1>")
+    return redirect("get_posts")
 
 
 def search_post(request):
-    search_query = request.GET['search']
-    print(search_query)
-    search_posts = models.Post.objects.filter(title__contains=search_query)
+    post = request.GET['title']
+    category = request.GET['category']
+    posts = models.Post.objects.all()
+    if post != '':
+        posts = posts.filter(title__contains=post)
+    if category != '':
+        posts = posts.filter(category_post__title__contains=category)
 
-    return render(request, 'search_post.html', context={"posts": search_posts})
+    return render(request, 'search_post.html', context={"posts": posts})
+
+
+def delete_post(request, id):
+    try:
+        post = models.Post.objects.get(id=id)
+    except models.Post.DoesNotExist:
+        return HttpResponse(f"<h1> Поста с таким {id} не существует</h1>")
+    post.delete()
+
+    return redirect("get_posts")

@@ -1,4 +1,3 @@
-
 # Create your models here.
 from django.db import models
 from django.urls import reverse
@@ -26,9 +25,20 @@ class Post(models.Model):
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
     description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
+    category_post = models.ForeignKey("CategoryPost", on_delete=models.DO_NOTHING, null=True, blank=True, default=None,
+                                      related_name="posts")
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.pk})
+
+
+class CategoryPost(models.Model):
+    title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
+
+

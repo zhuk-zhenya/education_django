@@ -5,7 +5,7 @@
     <title>Добавить новую книгу</title>
 </head>
 <body>
-    <form action="{% url 'create_book' %}" method="post">
+    <form action="{% url 'add_book' %}" method="post">
         {% csrf_token %}
         {% for field in form %}
         <p>{{ field.label_tag }} {{ field }}</p>
@@ -13,5 +13,6 @@
         <input type="submit" value="OK">
     </form>
 
+    <a href="{% url 'books' %}"><input type="button" value="назад"></a>
 </body>
 </html>
